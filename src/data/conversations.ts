@@ -1,0 +1,93 @@
+import { Conversation, Message } from '../types';
+
+export const SEED_CONVERSATIONS: Conversation[] = [
+  {
+    id: 'conv_1',
+    listingId: 'prod_1',
+    listingTitle: 'Casio FX-991EX Classwiz Scientific Calculator',
+    listingPrice: 950,
+    listingImage: 'https://images.unsplash.com/photo-1594980596870-8aa52a78d8cd?auto=format&fit=crop&w=800&q=80',
+    participant1Id: 'current_user',
+    participant1Name: 'You',
+    participant2Id: 'user_aarav',
+    participant2Name: 'Aarav Patel',
+    lastMessage: 'Sure! I have class until 4 PM. Can we meet near the library after that?',
+    lastMessageTimestamp: '2026-10-18T16:45:00Z',
+    unreadCount: 1,
+  },
+  {
+    id: 'conv_2',
+    listingId: 'prod_2',
+    listingTitle: 'Hero Sprint Pro 21-Speed Gear Bicycle',
+    listingPrice: 4800,
+    listingImage: 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=800&q=80',
+    participant1Id: 'current_user',
+    participant1Name: 'You',
+    participant2Id: 'user_kavya',
+    participant2Name: 'Kavya Rao',
+    lastMessage: 'Is the cycle lock included in the price?',
+    lastMessageTimestamp: '2026-10-18T12:30:00Z',
+    unreadCount: 0,
+  },
+];
+
+export const SEED_MESSAGES: Record<string, Message[]> = {
+  conv_1: [
+    {
+      id: 'msg_1',
+      conversationId: 'conv_1',
+      senderId: 'current_user',
+      senderName: 'You',
+      text: 'Hi Aarav, is this calculator still available? I need it for the VTU maths internal next week.',
+      timestamp: '2026-10-18T16:30:00Z',
+      read: true,
+    },
+    {
+      id: 'msg_2',
+      conversationId: 'conv_1',
+      senderId: 'user_aarav',
+      senderName: 'Aarav Patel',
+      text: 'Yes! It is in mint condition, used only for semester exams. Battery is 100% fine.',
+      timestamp: '2026-10-18T16:35:00Z',
+      read: true,
+    },
+    {
+      id: 'msg_3',
+      conversationId: 'conv_1',
+      senderId: 'current_user',
+      senderName: 'You',
+      text: 'Great, can we meet on campus today to test it?',
+      timestamp: '2026-10-18T16:40:00Z',
+      read: true,
+    },
+    {
+      id: 'msg_4',
+      conversationId: 'conv_1',
+      senderId: 'user_aarav',
+      senderName: 'Aarav Patel',
+      text: 'Sure! I have class until 4 PM. Can we meet near the library after that?',
+      timestamp: '2026-10-18T16:45:00Z',
+      read: false,
+    },
+  ],
+  conv_2: [
+    {
+      id: 'msg_201',
+      conversationId: 'conv_2',
+      senderId: 'current_user',
+      senderName: 'You',
+      text: 'Hello Kavya! I saw your Hero Sprint Pro listing.',
+      timestamp: '2026-10-18T12:28:00Z',
+      read: true,
+    },
+    {
+      id: 'msg_202',
+      conversationId: 'conv_2',
+      senderId: 'current_user',
+      senderName: 'You',
+      text: 'Is the cycle lock included in the price?',
+      timestamp: '2026-10-18T12:30:00Z',
+      read: true,
+    },
+  ],
+};
