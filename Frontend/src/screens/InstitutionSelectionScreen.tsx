@@ -6,28 +6,19 @@ import {
   ScrollView,
   StatusBar,
   Platform,
+  TouchableOpacity,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
 import { StepIndicator, PrimaryButton, InstitutionSelector } from '../components';
-import { Colors, Typography, Spacing, BorderRadius, Shadows } from '../constants';
+import { Colors, Typography, Spacing, BorderRadius } from '../constants';
 import { ROLE_CARDS } from '../constants';
-import { Institution, Role, RootStackParamList } from '../types';
+import { Institution, RootStackParamList } from '../types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'InstitutionSelection'>;
 
-/**
- * Institution Selection Screen (Step 2 of onboarding).
- *
- * The user has already selected a role on the previous screen.
- * Here they choose the institution they're associated with
- * before proceeding to email verification.
- *
- * Preserves CampusMart's established visual language — gradient
- * hero header, curved edge, step indicator, bottom CTA bar.
- */
 export const InstitutionSelectionScreen: React.FC<Props> = ({
   route,
   navigation,
@@ -35,7 +26,6 @@ export const InstitutionSelectionScreen: React.FC<Props> = ({
   const { selectedRole } = route.params;
   const [selectedInstitution, setSelectedInstitution] = useState<Institution | null>(null);
 
-  // Find the user-friendly role label
   const roleLabel =
     ROLE_CARDS.find((c) => c.role === selectedRole)?.title ?? selectedRole;
 
@@ -67,17 +57,19 @@ export const InstitutionSelectionScreen: React.FC<Props> = ({
           end={{ x: 1, y: 1 }}
           style={styles.heroHeader}
         >
-          <SafeAreaView>
+          <SafeAreaView edges={['top']}>
             <View style={styles.heroContent}>
               {/* Back button */}
               <View style={styles.topRow}>
-                <Ionicons
-                  name="arrow-back"
-                  size={22}
-                  color={Colors.white}
+                <TouchableOpacity
+                  style={styles.backButton}
                   onPress={() => navigation.goBack()}
+                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
                   accessibilityLabel="Go back"
-                />
+                  accessibilityRole="button"
+                >
+                  <Ionicons name="arrow-back" size={22} color={Colors.white} />
+                </TouchableOpacity>
               </View>
 
               {/* Step indicator */}
@@ -101,7 +93,6 @@ export const InstitutionSelectionScreen: React.FC<Props> = ({
 
         {/* ── Main Content ────────────────────────────────────── */}
         <View style={styles.contentSection}>
-          {/* Role badge (subtle) */}
           <View style={styles.roleBadge}>
             <View style={styles.roleDot} />
             <Text style={styles.roleText}>
@@ -109,7 +100,6 @@ export const InstitutionSelectionScreen: React.FC<Props> = ({
             </Text>
           </View>
 
-          {/* Heading */}
           <View style={styles.headingContainer}>
             <Text style={styles.heading}>Select your institution</Text>
             <Text style={styles.subheading}>
@@ -117,7 +107,6 @@ export const InstitutionSelectionScreen: React.FC<Props> = ({
             </Text>
           </View>
 
-          {/* Selector */}
           <View style={styles.selectorContainer}>
             <InstitutionSelector
               selectedInstitution={selectedInstitution}
@@ -125,7 +114,6 @@ export const InstitutionSelectionScreen: React.FC<Props> = ({
             />
           </View>
 
-          {/* Helper */}
           <Text style={styles.helperText}>
             Can't find your institution? More will be added soon.
           </Text>
@@ -155,10 +143,7 @@ const styles = StyleSheet.create({
   scrollContent: {
     paddingBottom: Spacing.xxl,
   },
-
-  // ── Hero Header ─────────────────────────────────────────────────
   heroHeader: {
-    paddingTop: Platform.OS === 'android' ? 40 : 0,
     paddingBottom: 40,
     position: 'relative',
   },
@@ -171,6 +156,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: Spacing.lg,
+  },
+  backButton: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   stepRow: {
     flexDirection: 'row',
@@ -208,8 +200,6 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
   },
-
-  // ── Content ─────────────────────────────────────────────────────
   contentSection: {
     paddingHorizontal: Spacing.xl,
     marginTop: -Spacing.xs,
@@ -266,8 +256,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: Spacing.lg,
   },
-
-  // ── Bottom CTA ──────────────────────────────────────────────────
   bottomContainer: {
     paddingHorizontal: Spacing.xl,
     paddingTop: Spacing.lg,

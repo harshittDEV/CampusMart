@@ -2,9 +2,11 @@
 
 # dependencies
 node_modules/
+node_modules
 
 # Expo
 .expo/
+.expo
 dist/
 web-build/
 expo-env.d.ts
@@ -42,7 +44,7 @@ yarn-error.*
 
 # Local dependencies and duplicate legacy frontend
 /node_modules 2/
-/FrontEnd/
+
 
 # Environment variables and secrets
 .env
