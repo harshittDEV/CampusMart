@@ -1,0 +1,22 @@
+# Maven target directory
+/target/
+
+# IDE files
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+
+# Environment files
+.env
+
+# Build artifacts
+*.jar
+*.war
+*.ear

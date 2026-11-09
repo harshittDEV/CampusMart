@@ -1,0 +1,21 @@
+# Frontend Integration Matrix
+
+This document maps existing React Native screens to the backend API endpoints that will be required in future phases. It is based on the current frontend codebase.
+
+| Frontend Screen / Feature                       | Data Required (frontend)                                 | Expected Backend Operation                                   | Proposed HTTP Method & Endpoint                     | Authentication Required? | Dependencies on Other Features | Open Questions |
+|-------------------------------------------------|----------------------------------------------------------|--------------------------------------------------------------|----------------------------------------------------|---------------------------|-------------------------------|----------------|
+| `EmailAuthenticationScreen` (step 3 of onboarding) | Institution ID, selected role, institutional email address | Send verification code to email (future OTP service)          | `POST /api/v1/auth/email/send-code`                | No (onboarding)           | Email provider configuration | How to handle rate limiting? |
+| `ProfileSetupScreen`                              | User profile details (name, avatar, etc.)                | Create user profile record                                   | `POST /api/v1/users`                             | Yes (after email verification) | User entity, storage service | Validation rules for profile fields |
+| `InstitutionSelectionScreen`                      | Selected institution ID                                   | Retrieve institution details (optional)                     | `GET /api/v1/institutions/{id}`                 | No                        | Institutions lookup service   | Pagination / search support |
+| `RoleSelectionScreen`                             | Chosen role (student, seller, etc.)                      | Store role selection for user onboarding                     | `POST /api/v1/onboarding/role`                 | No                        | None                         | Enum definition consistency |
+| `HomeScreen` (marketplace listing)               | Filters, pagination, search query                        | List marketplace items                                       | `GET /api/v1/listings` (with query params)      | Yes (authenticated)       | Listings service, pagination  | Sorting options |
+| `ProductDetailsScreen`                           | Listing ID                                                | Fetch detailed product information                           | `GET /api/v1/listings/{id}`                     | Yes                        | Listings service               | Related items endpoint |
+| `SellScreen` (create listing)                    | Listing data (title, price, images, description)          | Create new marketplace listing                               | `POST /api/v1/listings`                         | Yes                        | Image upload service           | Validation of price and images |
+| `EditListingScreen`                               | Listing ID, updated fields                               | Update existing listing                                      | `PUT /api/v1/listings/{id}`                     | Yes                        | Ownership check                | Partial update strategy |
+| `OrdersScreen`                                    | User's order history                                      | Retrieve orders for authenticated user                        | `GET /api/v1/orders`                            | Yes                        | Order service                  | Pagination |
+| `OrderDetailsScreen`                              | Order ID                                                  | Retrieve detailed order information                           | `GET /api/v1/orders/{id}`                       | Yes                        | Order service                  | Access control |
+
+**Notes**
+- All onboarding-related endpoints (email verification, role/institution selection) will be public but rate‑limited.
+- All marketplace and user‑profile endpoints require authentication (e.g., JWT) which will be implemented in Phase 3.
+- The exact request/response schemas will be defined when the corresponding domain models are introduced.
